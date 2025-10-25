@@ -7,8 +7,8 @@
 	<meta name="description" content="Personal portfolio of Mohammed – Front-End Developer" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="styles.css" />
-    <script src="script.js"></script>
+	<link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js"></script>
 </head>
 <body>
 	<header class="site-header" id="top">
@@ -20,10 +20,10 @@
 
 			<nav class="site-nav" aria-label="Primary">
 				<ul>
-					<li><a href="#about">About</a></li>
-					<li><a href="#experience">Experience</a></li>
-					<li><a href="#projects">Projects</a></li>
-					<li><a href="#contact">Contact</a></li>
+					<li><a href="#about" class="nav-link" data-section="about">About</a></li>
+					<li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+					<li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+					<li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
 				</ul>
 			</nav>
 
@@ -40,13 +40,15 @@
 					<p id="greeting" class="greeting" aria-live="polite">Welcome</p>
 					<h1 class="hero-title">I'm Mohammed</h1>
 					<p class="hero-subtitle">Machine Learning Specialist</p>
+					<div id="aiQuote" class="ai-quote" aria-live="polite"></div>
 					<div class="hero-cta">
 						<a href="#projects" class="btn btn-primary">View My Work</a>
+						<button id="aiSuggestionBtn" class="btn btn-ghost">AI Suggestion</button>
 					</div>
 				</div>
 				<div class="hero-visual" aria-hidden="true">
 					<!--<div class="hero-blob"></div>-->
-					<img class="about-photo" src="Images/image.png" alt="Profile placeholder" loading="lazy" height=400px />
+					<img class="about-photo" src="assets/images/image.png" alt="Profile placeholder" loading="lazy" height=400px />
 				</div>
 			</div>
 		</section>
@@ -61,7 +63,7 @@
 						<p> Eager to contribute technical knowledge and problem-solving abilities to innovative software or AI-driven projects.</p>
 					</div>
 					<div class="about-photo-wrap">
-						<img class="about-photo" src="Images/photo_of_me_2.PNG" alt="Profile placeholder" loading="lazy" height=200px/>
+						<img class="about-photo" src="assets/images/photo_of_me_2.PNG" alt="Profile placeholder" loading="lazy" height=200px/>
 					</div>
 				</div>
 			</div>
@@ -122,6 +124,19 @@
 							</div>
 						</div>
 					</article>
+				</div>
+				
+				<!-- API Data Section -->
+				<div id="apiData" class="api-data-section">
+					<h3 class="api-section-title">Daily Inspiration</h3>
+					<div id="apiContent" class="api-content">
+						<div id="apiLoading" class="api-loading">Loading inspiration...</div>
+						<div id="apiError" class="api-error" style="display: none;">
+							<p>Failed to load inspiration. Please try again.</p>
+							<button id="retryBtn" class="btn btn-primary">Retry</button>
+						</div>
+						<div id="apiSuccess" class="api-success" style="display: none;"></div>
+					</div>
 				</div>
 			</div>
 		</section>
