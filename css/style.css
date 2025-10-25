@@ -98,17 +98,8 @@ body {
 	transform: translateX(0);
 }
 
-/* Section transitions */
-.section {
-	opacity: 0;
-	transform: translateY(30px);
-	transition: opacity var(--transition-slow) ease, transform var(--transition-slow) ease;
-}
-
-.section.active {
-	opacity: 1;
-	transform: translateY(0);
-}
+/* Section transitions - removed conflicting styles */
+/* Sections now use individual animation classes instead of global styles */
 
 /* Helpers */
 .container {

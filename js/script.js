@@ -139,9 +139,6 @@ function setupSectionNavigation() {
 						link.classList.add('active');
 					}
 				});
-				
-				// Show section with animation
-				section.classList.add('active');
 			}
 		});
 	}
@@ -149,8 +146,19 @@ function setupSectionNavigation() {
 	// Initial call
 	updateActiveSection();
 	
-	// Listen for scroll events
-	window.addEventListener('scroll', updateActiveSection);
+	// Listen for scroll events with throttling for better performance
+	let ticking = false;
+	function onScroll() {
+		if (!ticking) {
+			requestAnimationFrame(() => {
+				updateActiveSection();
+				ticking = false;
+			});
+			ticking = true;
+		}
+	}
+	
+	window.addEventListener('scroll', onScroll);
 	
 	// Handle navigation clicks
 	navLinks.forEach(link => {
@@ -171,21 +179,54 @@ function setupSectionNavigation() {
 
 // Viewport-based animations using IntersectionObserver
 function setupAnimations() {
+	// Check if IntersectionObserver is supported
+	if (!('IntersectionObserver' in window)) {
+		// Fallback: show all elements immediately
+		const animatedElements = document.querySelectorAll(`
+			.project-card, 
+			.timeline-item, 
+			.about-text, 
+			.contact-form,
+			.hero-copy,
+			.hero-visual,
+			.about-photo-wrap,
+			.contact-info,
+			.api-data-section
+		`);
+		animatedElements.forEach(el => {
+			el.classList.add('visible');
+		});
+		return;
+	}
+
 	const observerOptions = {
-		threshold: 0.1,
-		rootMargin: '0px 0px -50px 0px'
+		threshold: 0.05, // Lower threshold for earlier triggering
+		rootMargin: '0px 0px -20px 0px' // Reduced margin for earlier triggering
 	};
 
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
 				entry.target.classList.add('visible');
+				// Stop observing once animated to improve performance
+				observer.unobserve(entry.target);
 			}
 		});
 	}, observerOptions);
 
-	// Observe elements for animation
-	const animatedElements = document.querySelectorAll('.project-card, .timeline-item, .about-text, .contact-form');
+	// Observe elements for animation with better selection
+	const animatedElements = document.querySelectorAll(`
+		.project-card, 
+		.timeline-item, 
+		.about-text, 
+		.contact-form,
+		.hero-copy,
+		.hero-visual,
+		.about-photo-wrap,
+		.contact-info,
+		.api-data-section
+	`);
+	
 	animatedElements.forEach((el, index) => {
 		// Add staggered animation classes
 		if (index % 2 === 0) {
@@ -194,6 +235,13 @@ function setupAnimations() {
 			el.classList.add('slide-in-right');
 		}
 		observer.observe(el);
+	});
+
+	// Also add fade-in animations to sections
+	const sections = document.querySelectorAll('.section');
+	sections.forEach(section => {
+		section.classList.add('fade-in');
+		observer.observe(section);
 	});
 }
 
